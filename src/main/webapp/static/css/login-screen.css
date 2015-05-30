@@ -1,0 +1,46 @@
+body {
+  padding-bottom: 20px;
+  background-color: #444;
+
+}
+.container {
+  width: 100%;
+  margin: auto 0;
+}
+.innner-wapper {
+  width: 800px;
+  margin: 60px auto 20px auto;
+  color: #ffffff;
+}
+
+.innner-wapper #header {
+  font-size: 50px;
+}
+
+.mform {
+  padding: 1px 30px;
+  color: #fff;
+}
+.mform .form-heading {
+  margin: 0 auto 20px auto;
+}
+.mform .form-heading * {
+  font-size: 17px;
+}
+.mform .form-heading .title {
+  font-size: 19px;
+  display: inline;
+  width: 50%;
+}
+.mform .form-heading a {
+  color: inherit;
+  padding: 0 0;
+}
+
+.mform .form-heading a:hover {
+  text-decoration: none;
+}
+
+.footer {
+  margin: 0;
+}
