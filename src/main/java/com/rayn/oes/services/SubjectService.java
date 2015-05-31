@@ -20,9 +20,10 @@ import java.util.Set;
 public class SubjectService {
     @Autowired
     private SubjectRepository subjectRepository;
-    @Autowired
-    private ProblemRepository problemRepository;
 
+    public long count() {
+        return subjectRepository.count();
+    }
     public Subject findOne(int id) {
         return subjectRepository.findOne(id);
     }

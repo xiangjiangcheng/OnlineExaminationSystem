@@ -1,8 +1,7 @@
 package com.rayn.oes.controller;
 
 import com.rayn.oes.entities.User;
-import com.rayn.oes.services.RoleService;
-import com.rayn.oes.services.UserService;
+import com.rayn.oes.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +20,23 @@ public class BaseController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private SubjectService subjectService;
+    @Autowired
+    private ProblemService problemService;
+    @Autowired
+    private ScoreService scoreService;
 
     @RequestMapping(value = "/")
     public String index() {
         User currentUser = userService.getCurrentUser();
         if (currentUser.getRole().getAuthority().endsWith("ADMIN")) {
-            return "redirect:/admin/paper";
+            return "redirect:/admin/info";
         } else {
-            return "redirect:/home";
+            return "redirect:/history";
         }
     }
+
     @RequestMapping(value = "/hello")
     public String hello(Model model) {
         model.addAttribute("title", "登录 - 在线考试系统");
@@ -63,5 +69,16 @@ public class BaseController {
         userService.create(user);
         model.addAttribute("title", "登录 - 在线考试系统");
         return "redirect:/hello?login";
+    }
+
+    @RequestMapping(value = "/admin/info", method = RequestMethod.GET)
+    public String AdminPage(Model model) {
+        model.addAttribute("title", "管理员 - 在线考试系统");
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("paperCount", subjectService.count());
+        model.addAttribute("problemCount", problemService.count());
+        model.addAttribute("studentCount", roleService.findByAuthority("STU").getUsers().size());
+        model.addAttribute("scoreCount", scoreService.count());
+        return "admin/info";
     }
 }

@@ -1,6 +1,7 @@
 <%-- Created by rayn on 05/28 2015 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ include file="template/header.jsp"%>
 <link rel="stylesheet" href="<c:url value='/static/css/main-page.css' />" />
@@ -13,7 +14,7 @@
       <div class="thumbnail block pined">
         <div class="caption">
           <h1 class="username">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b>${user.username}</b>
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b class="Username">${user.username}</b>
             <a class="btn btn-link pull-right toEditUser">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 编辑
             </a>
@@ -21,24 +22,20 @@
           <table class="table">
             <tr>
               <td width="5%"><span class="label label-default">邮箱</span></td>
-              <td>${user.email}</td>
+              <td class="email">${user.email}</td>
             </tr>
             <tr>
               <td width="5%"><span class="label label-default">电话</span></td>
-              <td>${user.phone}</td>
+              <td class="phone">${user.phone}</td>
             </tr>
             <tr>
               <td width="5%"><span class="label label-default">地址</span></td>
-              <td>${user.address}</td>
+              <td class="address">${user.address}</td>
+              <td class="password sr-only">${user.password}</td>
             </tr>
           </table>
         </div>
-        <p class="operation">
-          <span >用户信息</span>
-          <span class="afterExam" style="display: none;">考试结束</span>
-          <a class="btn btn-primary onExam toSubmitExam" role="button" name="${paper.id}" style="display: none;"
-             data-toggle="modal" data-target="#otherModal">提交试卷</a>
-        </p>
+        <p class="operation"><span >用户信息</span></p>
       </div>
     </div>
     <div id="scoreBlock" class="col-md-8">
@@ -66,7 +63,7 @@
                     </tr>
                     <tr class="timeRow">
                       <td><span class="label label-primary">考试时间</span></td>
-                      <td><span class="endTime">${score.endTime}</span></td>
+                      <td><span class="endTime"><fmt:formatDate value="${score.endTime}" pattern="yyyy/MM/dd"/></span></td>
                     </tr>
                   </table>
                   <div class="extra well well-sm" style="display: none;">
@@ -92,8 +89,6 @@
                 </div>
                 <p class="operation">
                   <a class="showExtra btn btn-default" role="button" name="${score.id}">试卷详情</a>
-                  <a class="toDelScore btn btn-danger" role="button" name="${score.id}"
-                     data-toggle="modal" data-target="#otherModal">删除</a>
                 </p>
               </div>
             </div>
@@ -101,45 +96,69 @@
         </c:if>
       </div>
     </div>
-    <div id="userForm" class="col-md-8" style="display: none;">
+    <div id="userForm" class="col-md-8" style="display: none;margin-top: 10px;">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-title">
-            <h3 class="panel-heading">修改用户信息
-              <button class='backScoreBlock btn btn-primary pull-right'>返回历史成绩</button>
-            </h3>
+          <div class="page-header" >
+            <h2 class="text-center">修改用户信息
+              <button class='backScoreBlock btn btn-default btn-sm pull-right'>
+                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> 返回
+              </button>
+            </h2>
           </div>
-          <div class="panel-body">
-            <from class="form-horizontal">
+          <div class="panel-body" style="padding-top: 30px">
+            <form class="form-horizontal" method="post">
               <div class="form-group">
                 <label class="col-md-2 control-label" for="InputUsername">用户名</label>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="InputUsername" name="username" placeholder="用户名" required="required">
+                  <input type="text" class="form-control" id="InputUsername" name="username" placeholder="用户名">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-2 control-label" for="InputPassword">密码</label>
+                <label class="col-md-2 control-label" for="InputOldPassword">旧密码</label>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="InputPassword" name="password" placeholder="密码" required="required">
+                  <input type="password" class="form-control" id="InputOldPassword" name="oldPassword" placeholder="旧密码">
                 </div>
               </div>
-            </from>
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="InputPassword">新密码</label>
+                <div class="col-md-8">
+                  <input type="password" class="form-control" id="InputPassword" name="password" placeholder="新密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="InputEmail">邮箱</label>
+                <div class="col-md-8">
+                  <input type="email" class="form-control" id="InputEmail" name="email" placeholder="邮箱">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="InputPhone">电话</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" id="InputPhone" name="phone" placeholder="电话">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="InputAddress">地址</label>
+                <div class="col-md-8">
+						      <textarea rows="5" maxlength="128" class="form-control" id="InputAddress"
+                      name="address" placeholder="地址" ></textarea>
+                </div>
+              </div>
+              <p class="formError alert alert-warning col-md-offset-2 col-md-8" style="display: none;"></p>
+              <div class="form-group">
+                <div class="col-md-offset-3 col-md-6">
+                  <div class="col-md-6">
+                    <button type="reset" class="btn btn-default btn-block" >重置</button>
+                  </div>
+                  <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary btn-block" id="editUser" name="${user.id}">提交</button>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="otherModal" class="modal fade" style="margin-top: 120px" role="dialog"
-     aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h3>是否确定删除选定成绩?</h3>
-      </div>
-      <div class="modal-footer">
-        <button id="deleteScore" type="button" class="btn btn-danger">确认</button>
-        <button type="button" class="btn btn-default closeIt" data-dismiss="modal">取消</button>
       </div>
     </div>
   </div>
@@ -147,35 +166,69 @@
 <%@ include file="template/footer.jsp"%>
 <script src="<c:url value='/static/scripts/jquery.pin.min.js' />"></script>
 <script>
+  function getFormData() {
+    var data = {
+      username: $('#InputUsername').val(),
+      password: $('#InputPassword').val(),
+      email: $('#InputEmail').val(),
+      phone: $('#InputPhone').val(),
+      address: $('#InputAddress').val()
+    };
+    return data;
+  }
   $(document).ready(function () {
     $('.showExtra').click(function () {
       var id = $(this).attr('name');
       $('#score' + id + ' .extra').slideToggle('fast');
     });
-    $('.toDelScore').click(function() {
-      $('#deleteScore').attr('name', $(this).attr('name'));
-    });
     $('.toEditUser').click(function() {
       $("#scoreBlock").hide();
+      $('#InputUsername').val($('.Username').html());
+      $('#InputEmail').val($('.email').html());
+      $('#InputPhone').val($('.phone').html());
+      $('#InputAddress').val($('.address').html());
       $("#userForm").fadeIn();
     });
     $(".backScoreBlock").click(function() {
       $("#userForm").hide();
       $("#scoreBlock").fadeIn();
     });
-    $('#deleteScore').click(function() {
-      var score_id = $(this).attr('name');
+    $('#editUser').click(function() {
+      var id = $(this).attr('name');
+      var url = '<c:url value="/user/edit/" />' + id;
+      var data = getFormData();
+      var $InputPwd = $('#InputOldPassword');
+      var $InputNewPwd = $('#InputPassword');
+      if ($InputPwd.val().length == 0) {
+        $('.formError').html("请输入原密码进行验证后才能提交.").fadeIn();
+        return false;
+      }
+      if ($InputPwd.val() != $('.password').html()) {
+        $('.formError').html("原密码输入错误.").fadeIn();
+        return false;
+      }
+      data.password = $InputPwd.val();
+      if ($InputNewPwd.val().length > 0) {
+        data.password = $InputNewPwd.val();
+      }
       $.ajax({
-        url: '<c:url value="/score/del/"/>' + score_id,
-        type: 'GET',
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
         success: function(ret) {
           if (ret.success) {
-            $('.closeIt').click();
-            $('#score' + score_id).fadeOut().remove();
+            window.location.reload();
+          } else {
+            $('.formError').html("修改失败, 请核对填写数据的正确性.").fadeIn();
           }
         },
-        error: function() {}
+        error: function () {
+          $('.formError').html("修改失败, 请核对填写数据的正确性.").fadeIn();
+        }
       });
+      return false;
     });
   });
 </script>

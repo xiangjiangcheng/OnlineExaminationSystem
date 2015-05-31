@@ -10,11 +10,10 @@ import com.rayn.oes.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -49,6 +48,7 @@ public class StudentController {
         model.addAttribute("paperList", paperList);
         return "home";
     }
+
     @RequestMapping(value = "/exam/{paper_id}", method = RequestMethod.GET)
     public String exam(@PathVariable int paper_id, Model model) {
         Subject subject = subjectService.findOne(paper_id);
@@ -59,9 +59,11 @@ public class StudentController {
         model.addAttribute("weightMap", problemService.getWeightMap());
         return "exam";
     }
+
     @RequestMapping(value = "/exam/{paper_id}/{score}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> examScore(@PathVariable int paper_id, @PathVariable double score) {
+    public Map<String, Object> examScore(@PathVariable int paper_id, @PathVariable double score)
+            throws ParseException {
         Map<String, Object> result = new HashMap<>();
         User user = userService.getCurrentUser();
         Subject subject = subjectService.findOne(paper_id);
@@ -69,11 +71,12 @@ public class StudentController {
         scoreEntity.setScore(score);
         scoreEntity.setUser(user);
         scoreEntity.setSubject(subject);
-        scoreEntity.setEndTime(new Date());
+        scoreEntity.setEndTime(scoreService.getCurrentDate());
         scoreService.create(scoreEntity);
         result.put("success", true);
         return result;
     }
+
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public String history(Model model) {
         User user = userService.getCurrentUser();
@@ -84,13 +87,25 @@ public class StudentController {
         return "history";
     }
 
-    @RequestMapping(value = "/score/del/{score_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/edit/{user_id}", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> deleteScore(@PathVariable int score_id) {
+    public Map<String, Object> updateUser(@RequestBody User user, BindingResult bindingResult, @PathVariable int user_id) {
         Map<String, Object> result = new HashMap<>();
-        scoreService.delete(score_id);
-        result.put("success", true);
+        if (bindingResult.hasErrors()) {
+            result.put("success", false);
+        } else {
+            User old_user = userService.findById(user_id);
+            old_user.setUsername(user.getUsername());
+            old_user.setPassword(user.getPassword());
+            old_user.setPhone(user.getPhone());
+            old_user.setEmail(user.getEmail());
+            old_user.setAddress(user.getAddress());
+            userService.update(old_user);
+            result.put("success", true);
+        }
         return result;
     }
+
+
 
 }

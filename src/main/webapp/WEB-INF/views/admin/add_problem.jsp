@@ -93,7 +93,7 @@
                           <span class="sr-only answer">${problem.answer}</span>
                         </td>
                         <td>
-                          <span class="label label-default">题目难度</span>
+                          <span class="label label-default">难度</span>
                           <span style="margin-left: 15px;">${weightMap[problem.weight]}</span>
                           <span class="sr-only weight">${problem.weight}</span>
                         </td>

@@ -1,7 +1,6 @@
 <%-- Created by rayn on 05/25 2015 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ include file="../template/header.jsp"%>
 <link rel="stylesheet" href="<c:url value='/static/css/main-page.css' />" />
 </head>
@@ -55,7 +54,7 @@
                       <span class="sr-only answer">${problem.answer}</span>
                     </td>
                     <td>
-                      <span class="label label-default">题目难度</span>
+                      <span class="label label-default">难度</span>
                       <span style="margin-left: 15px;">${weightMap[problem.weight]}</span>
                       <span class="sr-only weight">${problem.weight}</span>
                     </td>

@@ -11,7 +11,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<c:url value='/' />">在线考试系统</a>
+      <a class="navbar-brand">在线考试系统</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -22,7 +22,7 @@
         <sec:authorize access="hasRole('ADMIN')">
           <li><a href="<c:url value='/admin/paper' />">试卷管理</a></li>
           <li><a href="<c:url value='/admin/problem' />">题库管理</a></li>
-          <li><a href="<c:url value='/admin/student' />">学生管理</a></li>
+          <li><a href="<c:url value='/admin/users' />">学生管理</a></li>
           <li><a href="<c:url value='/admin/scores' />">成绩统计</a></li>
         </sec:authorize>
       </ul>
@@ -37,7 +37,7 @@
             <li><a href="<c:url value='/history' />">个人主页</a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ADMIN')">
-              <li><a href="<c:url value='/info' />">个人主页</a></li>
+              <li><a href="<c:url value='/admin/info' />">个人主页</a></li>
             </sec:authorize>
             <li class="divider"></li>
             <li><a href="<c:url value='/logout' />">注销</a></li>

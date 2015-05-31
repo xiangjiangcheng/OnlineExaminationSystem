@@ -2,6 +2,7 @@ package com.rayn.oes.repositories;
 
 import com.rayn.oes.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * RoleRepository

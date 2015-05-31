@@ -27,6 +27,9 @@ public class ProblemService {
     public String[] getWeightMap() {
         return weightMap;
     }
+    public long count() {
+        return problemRepository.count();
+    }
     public Problem findOne(int id) {
         return problemRepository.findOne(id);
     }

@@ -1,7 +1,10 @@
 package com.rayn.oes.repositories;
 
+import com.rayn.oes.entities.Role;
 import com.rayn.oes.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * UserRepository
@@ -9,4 +12,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByUsername(String username);
+    public List<User> findByRole(Role role);
 }
