@@ -39,6 +39,20 @@
           <encoding>${project.encoding}</encoding>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <url>http://localhost:8080/manager/text</url>
+          <path>/oes</path>
+          <update>true</update>
+          <server>tomcat</server>
+          <username>admin</username>
+          <password>6300</password>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
